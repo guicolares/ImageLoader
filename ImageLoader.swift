@@ -19,10 +19,10 @@ class ImageLoader {
     
     func imageForUrl(_ urlString: String, completionHandler:@escaping (_ image: UIImage?, _ url: String) -> ()) {
         let urlStringConvert = urlString.addingPercentEncoding( withAllowedCharacters: .urlQueryAllowed)!
-        var url = URL(string: urlStringConvert )
+        let url = URL(string: urlStringConvert )
         
         DispatchQueue.global(qos: .background).async { 
-            var data: NSData? = self.cache.object(forKey: urlString as NSString) as? NSData
+            let data: NSData? = self.cache.object(forKey: urlString as NSString) as? NSData
             if let goodData = data {
                 let image = UIImage(data: goodData as Data)
                 DispatchQueue.main.async {
@@ -31,7 +31,7 @@ class ImageLoader {
                 return
             }
             
-            var downloadTask: URLSessionDataTask = URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) in
+            let downloadTask: URLSessionDataTask = URLSession.shared.dataTask(with: url!, completionHandler: { (data, response, error) in
                 if error != nil {
                     completionHandler(nil, urlString)
                     return
